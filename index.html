@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rinha de Front-end</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
+
+<style>
+.boldFont {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 58.09px;
+}
+
+.regularFont {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29.05px;
+}
+
+.uploadButton input {
+    opacity:0;
+    font-size:999px;
+    cursor:pointer;
+}
+
+.uploadButton {
+    width: Hug(110px);
+    height: Hug(31px);
+    border-radius: 5px;
+    padding: 6px 12px 6px 12px;
+    gap: 10px;
+    opacity: 70%;
+
+    /* opacity:0;
+    font-size:999px;
+    cursor:pointer; */
+
+    /* font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19.36px; */
+}
+
+.msgError {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.36px;
+    color: #BF0E0E;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+    <div style="text-align: center;">
+        <p class="boldFont">JSON Tree Viewer</p>
+        <p class="regularFont">Simple JSON Viewer that runs completely on-client. No data exchange </p>
+
+        <input class="uploadButton" type="file" name="file" id="input" onchange="previewFile()"/>
+        <p class="msgError"></p>
+    </div>
+    <div style="display: grid; justify-content: center;">
+        <div style=" font-family: 'Inter', sans-serif;
+           font-weight: 700; font-size: 32px; line-height: 38.73px; color: #000000;" id="renderedOutPut"></div>
+        <p class="content"></p>
+    </div>
+
+
+    <script>
+
+        const selectedFile = document.getElementById("input").files[0];
+        console.log(selectedFile)
+
+        const inputElement = document.getElementById("input");
+        inputElement.addEventListener("change", handleFiles, false);
+        function handleFiles() {
+            const fileList = this.files; /* now you can work with the file list */
+            console.log(fileList)
+
+            //let printJSON = JSON.stringify(fileList)
+
+            const outPut = document.getElementById("renderedOutPut")
+            outPut.innerHTML = JSON.stringify(fileList[0].name) //fileList[0].name + fileList[0].path
+
+        }
+
+        function previewFile() {
+            const content = document.querySelector(".content");
+            const [file] = document.querySelector("input[type=file]").files;
+            const reader = new FileReader();
+
+            reader.addEventListener(
+                "load",
+                () => {
+                // this will then display a text file
+                content.innerText = reader.result;
+                },
+                false,
+            );
+
+            if (file) {
+                reader.readAsText(file);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+    </script>
+    
+</body>
+</html>
