@@ -4,9 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rinha de Front-end</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- and it's easy to individually load additional languages -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script> -->
+
+    <script>hljs.highlightAll();</script>
+
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
+
+
+
 
 <style>
 .boldFont {
@@ -55,6 +69,18 @@
     color: #BF0E0E;
 }
 
+.content {
+    /* top: 73px; */
+    /* width: 638px; */
+    /* height: 896px; */
+
+    /* font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28.24px; */
+
+}
+
 
 </style>
 
@@ -72,20 +98,61 @@
     <div style="display: grid; justify-content: center;">
         <div style=" font-family: 'Inter', sans-serif;
            font-weight: 700; font-size: 32px; line-height: 38.73px; color: #000000;" id="renderedOutPut"></div>
-        <p class="content"></p>
+
+        <pre>
+            <code class="json"></code>
+        </pre>
+
+        <pre><code class="json">
+            <p class="content"></p>
+            {
+                "Actors": [
+                    {
+                    "name": "Tom Cruise",
+                    "age": 56,
+                    "Born At": "Syracuse, NY",
+                    "Birthdate": "July 3, 1962",
+                    "photo": "https://jsonformatter.org/img/tom-cruise.jpg",
+                    "wife": null,
+                    "weight": 67.5,
+                    "hasChildren": true,
+                    "hasGreyHair": false,
+                    "children": [
+                        "Suri",
+                        "Isabella Jane",
+                        "Connor"
+                    ]
+                    },
+                    {
+                    "name": "Robert Downey Jr.",
+                    "age": 53,
+                    "Born At": "New York City, NY",
+                    "Birthdate": "April 4, 1965",
+                    "photo": "https://jsonformatter.org/img/Robert-Downey-Jr.jpg",
+                    "wife": "Susan Downey",
+                    "weight": 77.1,
+                    "hasChildren": true,
+                    "hasGreyHair": false,
+                    "children": [
+                        "Indio Falconer",
+                        "Avri Roel",
+                        "Exton Elias"
+                    ]
+                    }
+                ]
+            }
+        </code></pre>
     </div>
 
-
-    <script>
-
+    <script>    
         const selectedFile = document.getElementById("input").files[0];
-        console.log(selectedFile)
+        //console.log(selectedFile)
 
         const inputElement = document.getElementById("input");
         inputElement.addEventListener("change", handleFiles, false);
         function handleFiles() {
             const fileList = this.files; /* now you can work with the file list */
-            console.log(fileList)
+            //console.log(fileList)
 
             //let printJSON = JSON.stringify(fileList)
 
@@ -95,32 +162,42 @@
         }
 
         function previewFile() {
-            const content = document.querySelector(".content");
+            const content = document.querySelector(".json");
             const [file] = document.querySelector("input[type=file]").files;
             const reader = new FileReader();
 
             reader.addEventListener(
                 "load",
                 () => {
+
+                    let dataParsed = []
+
                 // this will then display a text file
-                content.innerText = reader.result;
+                    const parsedValues = JSON.stringify(reader.result, null, 2, ([key, value]) => {
+                        
+                    //console.log("key===>>>>>> " + key);
+                    dataParsed.push(parsedValues)
+                return;
+                });
+
+
+                content.innerHTML = reader.result //parsedValues
+                console.log(reader.result)
+                //console.log(content.innerHTML)
+
+                
+                //console.log("content   " + JSON.stringify(content))
                 },
                 false,
             );
 
             if (file) {
                 reader.readAsText(file);
+                //console.log("file Raw ---> " +JSON.stringify(file))
             }
+
+            //console.log(content)
         }
-
-
-
-
-
-
-
-
-
 
     </script>
     
